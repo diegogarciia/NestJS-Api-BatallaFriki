@@ -18,7 +18,7 @@ export class PersonajeService {
       throw new BadRequestException('No puedes atacarte a ti mismo');
     }
 
-    const atacante = this.personajes.find(c => c.id === Number(objetivoId));
+    const atacante = this.personajes.find(c => c.id === Number(atacanteId));
     const objetivo = this.personajes.find(c => c.id === Number(objetivoId));
 
     if (!atacante || !objetivo) {

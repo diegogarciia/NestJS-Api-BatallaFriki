@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePersonajesBdDto } from './dto/create-personajes-bd.dto';
 import { UpdatePersonajesBdDto } from './dto/update-personajes-bd.dto';
+import { PrismaService } from '../prisma/prisma.service'; 
 
 @Injectable()
 export class PersonajesBdService {
+  constructor(private readonly prisma: PrismaService) {}
+
   create(createPersonajesBdDto: CreatePersonajesBdDto) {
-    return 'This action adds a new personajesBd';
+    return this.prisma.character.create({
+      data: createPersonajesBdDto,
+    });
   }
 
   findAll() {
-    return `This action returns all personajesBd`;
+    return this.prisma.character.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} personajesBd`;
+    return this.prisma.character.findUnique({
+      where: { id },
+    });
   }
 
   update(id: number, updatePersonajesBdDto: UpdatePersonajesBdDto) {
-    return `This action updates a #${id} personajesBd`;
+    return this.prisma.character.update({
+      where: { id },
+      data: updatePersonajesBdDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} personajesBd`;
+    return this.prisma.character.delete({
+      where: { id },
+    });
   }
 }

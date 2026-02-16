@@ -1638,6 +1638,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/adapter-pg@npm:^7.4.0":
+  version: 7.4.0
+  resolution: "@prisma/adapter-pg@npm:7.4.0"
+  dependencies:
+    "@prisma/driver-adapter-utils": "npm:7.4.0"
+    pg: "npm:^8.16.3"
+    postgres-array: "npm:3.0.4"
+  checksum: 10c0/95c667a1a04056c17fad6d9a5dd28ad3b84e5e03b393a92188334ecc6082e11d6777967957017cabde07f26df88aeb3b59c04269d33d6aab5af9125ab2e1db7f
+  languageName: node
+  linkType: hard
+
 "@prisma/client-runtime-utils@npm:7.4.0":
   version: 7.4.0
   resolution: "@prisma/client-runtime-utils@npm:7.4.0"
@@ -1710,6 +1721,15 @@ __metadata:
     valibot: "npm:1.2.0"
     zeptomatch: "npm:2.1.0"
   checksum: 10c0/b07ee97d5aa34ffb360dde1098ecfd7e03e3e083e73bfc35f02480615ce48856f135c5c94830f0d7016b3ab684bef54fdd470b07f9e76e6d58c886a2f3ab99f5
+  languageName: node
+  linkType: hard
+
+"@prisma/driver-adapter-utils@npm:7.4.0":
+  version: 7.4.0
+  resolution: "@prisma/driver-adapter-utils@npm:7.4.0"
+  dependencies:
+    "@prisma/debug": "npm:7.4.0"
+  checksum: 10c0/440d493a6b59d77dd4f3242476de028d85b202cb1ddb588b7465b47194929e93a52a445c77952caf3a5c28433d1b3387909e1b5a1e80a02d953b91265e18fffb
   languageName: node
   linkType: hard
 
@@ -2125,7 +2145,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/pg@npm:^8":
+"@types/pg@npm:^8.16.0":
   version: 8.16.0
   resolution: "@types/pg@npm:8.16.0"
   dependencies:
@@ -4160,6 +4180,7 @@ __metadata:
     "@nestjs/schematics": "npm:^11.0.0"
     "@nestjs/testing": "npm:^11.0.1"
     "@nestjs/typeorm": "npm:^11.0.0"
+    "@prisma/adapter-pg": "npm:^7.4.0"
     "@prisma/client": "npm:^7.4.0"
     "@types/express": "npm:^5.0.0"
     "@types/jest": "npm:^30.0.0"
@@ -4167,7 +4188,7 @@ __metadata:
     "@types/node": "npm:^22.10.7"
     "@types/passport": "npm:^0"
     "@types/passport-jwt": "npm:^4.0.1"
-    "@types/pg": "npm:^8"
+    "@types/pg": "npm:^8.16.0"
     "@types/supertest": "npm:^6.0.2"
     eslint: "npm:^9.18.0"
     eslint-config-prettier: "npm:^10.0.1"
@@ -7731,7 +7752,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pg@npm:^8.18.0":
+"pg@npm:^8.16.3, pg@npm:^8.18.0":
   version: 8.18.0
   resolution: "pg@npm:8.18.0"
   dependencies:
@@ -7835,6 +7856,13 @@ __metadata:
   version: 1.1.0
   resolution: "possible-typed-array-names@npm:1.1.0"
   checksum: 10c0/c810983414142071da1d644662ce4caebce890203eb2bc7bf119f37f3fe5796226e117e6cca146b521921fa6531072674174a3325066ac66fce089a53e1e5196
+  languageName: node
+  linkType: hard
+
+"postgres-array@npm:3.0.4":
+  version: 3.0.4
+  resolution: "postgres-array@npm:3.0.4"
+  checksum: 10c0/47f3e648da512bacdd6a5ed55cf770605ec271330789faeece0fd13805a49f376d6e5c9e0e353377be11a9545e727dceaa2473566c505432bf06366ccd04c6b2
   languageName: node
   linkType: hard
 

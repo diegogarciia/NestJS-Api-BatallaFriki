@@ -15,7 +15,7 @@ async function seedCharacters(prisma) {
         nombre: 'Sauron',
         vida: 30,
         ataque: 5,
-        nivel: 5,
+        nivel: 1,
         nivelMinimoObtencion: 1,
         imagen: 'https://static.wikia.nocookie.net/eldragonverde/images/3/3a/Sauron.jpg/revision/latest?cb=20110626161300&path-prefix=es'
       },

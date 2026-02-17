@@ -1,5 +1,5 @@
 export class Juego {
-  id: string;            
+  id: string;             
   jugadorId: number;      
   
   nombreJugador: string;
@@ -11,8 +11,11 @@ export class Juego {
   vidaActualRival: number;
   vidaMaxRival: number;
   ataqueRival: number;
-
+  
+  rivalEsCpu: boolean;    
+  oponenteId?: number;    
+  ganadorId?: number;     
+  
   turno: 'JUGADOR' | 'RIVAL';
   finalizado: boolean;
-  ganadorId?: number;     
 }

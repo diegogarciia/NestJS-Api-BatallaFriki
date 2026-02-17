@@ -47,4 +47,47 @@ export class JuegoService {
     this.partidasActivas.set(usuarioId, nuevaPartida);
     return nuevaPartida;
   }
+
+  async atacar(usuarioId: number): Promise<Juego> {
+    const partida = this.partidasActivas.get(usuarioId);
+
+    if (!partida) {
+      throw new NotFoundException('No tienes ninguna partida activa');
+    }
+
+    if (partida.finalizado) {
+      return partida;
+    }
+
+    partida.vidaActualRival -= partida.ataqueJugador;
+    
+    if (partida.vidaActualRival <= 0) {
+      partida.vidaActualRival = 0;
+      partida.finalizado = true;
+      partida.ganadorId = usuarioId;
+      
+      await this.prisma.user.update({
+        where: { id: usuarioId },
+        data: { victorias: { increment: 1 }, experiencia: { increment: 50 } }
+      });
+
+      return partida;
+    }
+
+    if (partida.rivalEsCpu) {
+      partida.vidaActualJugador -= partida.ataqueRival;
+
+      if (partida.vidaActualJugador <= 0) {
+        partida.vidaActualJugador = 0;
+        partida.finalizado = true;
+        
+        await this.prisma.user.update({
+          where: { id: usuarioId },
+          data: { derrotas: { increment: 1 } }
+        });
+      }
+    }
+
+    return partida;
+  }
 }

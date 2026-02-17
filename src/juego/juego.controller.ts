@@ -13,4 +13,11 @@ export class JuegoController {
     const usuarioId = req.user.id; 
     return this.juegoService.iniciarPartida(usuarioId, createJuegoDto);
   }
+
+  @Post('atacar')
+  @UseGuards(JwtGuard)
+  async atacar(@Req() req) {
+    const usuarioId = req.user.id;
+    return this.juegoService.atacar(usuarioId);
+  }
 }

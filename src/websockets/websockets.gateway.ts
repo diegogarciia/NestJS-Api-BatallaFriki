@@ -39,12 +39,29 @@ export class WebsocketsGateway implements OnGatewayConnection, OnGatewayDisconne
     @MessageBody() data: any
   ) {
     try {
-      const payload = typeof data === 'string' ? JSON.parse(data) : data;
-      const usuarioId = Number(payload.usuarioId);
+      let rawData = data;
+      
+      if (typeof data === 'string') {
+        if (data.includes('JSON:')) {
+          rawData = data.replace('JSON:', '').trim();
+        }
+      }
+
+      const payload = typeof rawData === 'string' ? JSON.parse(rawData) : rawData;
+      
+      const usuarioId = Number(payload.usuarioId || payload);
+
+      if (!usuarioId || isNaN(usuarioId)) {
+        throw new Error('ID de usuario no válido');
+      }
+
+      console.log(`Procesando ataque para ID: ${usuarioId}`);
 
       this.websocketsService.addUser(client.id, usuarioId, `Jugador_${usuarioId}`);
 
       const estadoPartida = await this.juegoService.atacar(usuarioId);
+
+      console.log(`Vida rival restante: ${estadoPartida.vidaActualRival}`);
 
       this.server.emit('estado-batalla', estadoPartida);
 

@@ -8,9 +8,10 @@ import { PersonajesBdModule } from './personajes-bd/personajes-bd.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { JuegoModule } from './juego/juego.module';
+import { WebsocketsModule } from './websockets/websockets.module';
 
 @Module({
-  imports: [PersonajeModule, UsersModule, ConfigModule.forRoot({ isGlobal: true }), PersonajesBdModule, AuthModule, PrismaModule, JuegoModule],
+  imports: [PersonajeModule, UsersModule, ConfigModule.forRoot({ isGlobal: true }), PersonajesBdModule, AuthModule, PrismaModule, JuegoModule, WebsocketsModule],
   controllers: [AppController],
   providers: [AppService],
 })

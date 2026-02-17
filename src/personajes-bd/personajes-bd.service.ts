@@ -36,18 +36,4 @@ export class PersonajesBdService {
     });
   }
 
-  async getRanking() {
-    return this.prisma.user.findMany({
-      orderBy: {
-        victorias: 'desc',
-      },
-      select: {
-        nick: true,
-        victorias: true,
-        derrotas: true,
-        nivel: true,
-        experiencia: true
-      },
-    });
-  }
 }

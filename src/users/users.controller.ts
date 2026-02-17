@@ -10,6 +10,12 @@ import { Roles } from '../auth/roles/roles.decorator';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get('ranking')
+  @UseGuards(JwtGuard, RolesGuard) 
+  findAllRanking() {
+    return this.usersService.getRanking();
+  }
+
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);

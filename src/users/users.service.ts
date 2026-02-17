@@ -6,7 +6,22 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {} 
+  constructor(private readonly prisma: PrismaService) {}
+  
+  async getRanking() {
+    return this.prisma.user.findMany({
+      orderBy: {
+        victorias: 'desc',
+      },
+      select: {
+        nick: true,
+        victorias: true,
+        derrotas: true,
+        nivel: true,
+        experiencia: true
+      },
+    });
+  }
   
   async create(createUserDto: CreateUserDto) {
     const { password, ...userData } = createUserDto;

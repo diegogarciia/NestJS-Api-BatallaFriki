@@ -1536,9 +1536,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/platform-socket.io@npm:^11.1.13":
-  version: 11.1.13
-  resolution: "@nestjs/platform-socket.io@npm:11.1.13"
+"@nestjs/platform-socket.io@npm:^11.1.14":
+  version: 11.1.14
+  resolution: "@nestjs/platform-socket.io@npm:11.1.14"
   dependencies:
     socket.io: "npm:4.8.3"
     tslib: "npm:2.8.1"
@@ -1546,7 +1546,7 @@ __metadata:
     "@nestjs/common": ^11.0.0
     "@nestjs/websockets": ^11.0.0
     rxjs: ^7.1.0
-  checksum: 10c0/0b89536f692a83296627672fc3fe16ae8df39fb88966f37a404cad32633447fed23e36d97efc354b1390e95b055b9c9482815a80963150d2d5d34c4353e77fa9
+  checksum: 10c0/0e8bb66594fa1aacc60d1757ce6dcfae9b2ae04e77328f16443584bd9d242ea7ef8bb83c58bfa526be42b7b72a16f4eea72823270210d4702140348aecb554c0
   languageName: node
   linkType: hard
 
@@ -1597,9 +1597,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/websockets@npm:^11.1.13":
-  version: 11.1.13
-  resolution: "@nestjs/websockets@npm:11.1.13"
+"@nestjs/websockets@npm:^11.1.14":
+  version: 11.1.14
+  resolution: "@nestjs/websockets@npm:11.1.14"
   dependencies:
     iterare: "npm:1.2.1"
     object-hash: "npm:3.0.0"
@@ -1613,7 +1613,7 @@ __metadata:
   peerDependenciesMeta:
     "@nestjs/platform-socket.io":
       optional: true
-  checksum: 10c0/a7e602b1fa48c9aa6adcb362e53f0d92a4db1c497c63c455d37aeed5f1cf5e32a30c69077b2eee951851162001b058a431f3692e52d45bbeaaac0d9b32d2b657
+  checksum: 10c0/944d3272d1bab6cfa46a207f80b5947c5f73779e41c309b5daaa7c2e841552e197d136eb940b910bdb3fb5b8f4843dd68da2908a34a417a52bee2c317c9ade08
   languageName: node
   linkType: hard
 
@@ -4308,11 +4308,11 @@ __metadata:
     "@nestjs/mapped-types": "npm:^2.1.0"
     "@nestjs/passport": "npm:^11.0.5"
     "@nestjs/platform-express": "npm:^11.0.1"
-    "@nestjs/platform-socket.io": "npm:^11.1.13"
+    "@nestjs/platform-socket.io": "npm:^11.1.14"
     "@nestjs/schematics": "npm:^11.0.0"
     "@nestjs/testing": "npm:^11.0.1"
     "@nestjs/typeorm": "npm:^11.0.0"
-    "@nestjs/websockets": "npm:^11.1.13"
+    "@nestjs/websockets": "npm:^11.1.14"
     "@prisma/adapter-pg": "npm:^7.4.0"
     "@prisma/client": "npm:^7.4.0"
     "@types/bcrypt": "npm:^6.0.0"

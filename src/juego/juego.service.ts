@@ -68,7 +68,7 @@ export class JuegoService {
       
       await this.prisma.user.update({
         where: { id: usuarioId },
-        data: { victorias: { increment: 1 }, experiencia: { increment: 50 } }
+        data: { victorias: { increment: 1 }, experiencia: { increment: 10 } }
       });
 
       return partida;

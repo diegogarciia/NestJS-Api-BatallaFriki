@@ -10,6 +10,12 @@ import { Roles } from '../auth/roles/roles.decorator';
 export class PersonajesBdController {
   constructor(private readonly personajesBdService: PersonajesBdService) {}
 
+  @Get('ranking')
+  @UseGuards(JwtGuard, RolesGuard) 
+  findAllRanking() {
+    return this.personajesBdService.getRanking();
+  }
+
   @Post()
   @UseGuards(JwtGuard, RolesGuard)
   @Roles('ADMIN')
@@ -47,4 +53,5 @@ export class PersonajesBdController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.personajesBdService.remove(id);
   }
+
 }

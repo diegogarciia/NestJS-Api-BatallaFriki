@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateJuegoDto, TipoOponente } from './dto/create-juego.dto';
 import { Juego } from './entities/juego.entity';
@@ -15,6 +15,14 @@ export class JuegoService {
 
     if (!usuario || !personajeJugador) {
       throw new NotFoundException('Usuario o Personaje no encontrado');
+    }
+
+    const nivelRequerido = personajeJugador.nivel; 
+    
+    if (usuario.nivel < nivelRequerido) {
+      throw new BadRequestException(
+        `Nivel insuficiente. Tu nivel es ${usuario.nivel} pero este personaje requiere nivel ${nivelRequerido}.`
+      );
     }
 
     const personajeRivalId = createJuegoDto.personajeOponenteId || 1; 
@@ -66,10 +74,27 @@ export class JuegoService {
       partida.finalizado = true;
       partida.ganadorId = usuarioId;
       
+      const usuario = await this.prisma.user.findUnique({ where: { id: usuarioId } });
+      
+      if (!usuario) {
+        throw new NotFoundException('Usuario no encontrado');
+      }
+      
+      const experienciaGanada = 10;
+      const nuevaExperiencia = usuario.experiencia + experienciaGanada;
+      
+      const nuevoNivel = Math.floor(nuevaExperiencia / 100) + 1;
+
       await this.prisma.user.update({
         where: { id: usuarioId },
-        data: { victorias: { increment: 1 }, experiencia: { increment: 10 } }
+        data: { 
+          victorias: { increment: 1 }, 
+          experiencia: nuevaExperiencia,
+          nivel: nuevoNivel  
+        }
       });
+
+      this.partidasActivas.delete(usuarioId); 
 
       return partida;
     }
@@ -85,6 +110,8 @@ export class JuegoService {
           where: { id: usuarioId },
           data: { derrotas: { increment: 1 } }
         });
+        
+        this.partidasActivas.delete(usuarioId);
       }
     }
 

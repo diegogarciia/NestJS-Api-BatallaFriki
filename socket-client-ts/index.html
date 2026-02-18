@@ -1,73 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Cliente de Batalla (Socket.IO)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body style="padding:20px; font-family:sans-serif">
-
-    <h1>Arena de Batalla</h1>
-
-    <p>
-      Estado del servidor:
-      <span id="lblOn" style="color:green; display:none">Online 🟢</span>
-      <span id="lblOff" style="color:red">Offline 🔴</span>
-    </p>
-
-    <p>
-      ID del Socket: <span id="clientId" style="color:blue">Connecting...</span>
-    </p>
-
-    <hr>
-
-    <div id="divSetup">
-      <h3>1. Configuración de Partida</h3>
-      <p>Introduce los IDs de tu Base de Datos:</p>
-      
-      <div style="margin-bottom: 10px;">
-        <label>ID Usuario:</label>
-        <input id="txtUserId" type="number" value="5" placeholder="Ej: 5" />
-      </div>
-
-      <div style="margin-bottom: 10px;">
-        <label>ID Personaje:</label>
-        <input id="txtHeroId" type="number" value="1" placeholder="Ej: 1" />
-      </div>
-
-      <button id="btnIniciar">Iniciar Partida (HTTP)</button>
-      <span id="setupMessage" style="color: orange; margin-left: 10px;"></span>
-    </div>
-
-    <div id="divArena" style="display: none; margin-top: 30px; padding: 20px; border: 2px solid #333; border-radius: 10px;">
-      
-      <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 20px;">
-        <div>
-          <h2 id="lblPlayerName" style="color: blue;">Jugador</h2>
-          <h1 id="lblPlayerHp">100 HP</h1>
-          <p>Ataque: <span id="lblPlayerAtk">0</span></p>
-        </div>
-
-        <h1 style="align-self: center;">VS</h1>
-
-        <div>
-          <h2 id="lblRivalName" style="color: red;">Rival</h2>
-          <h1 id="lblRivalHp">100 HP</h1>
-          <p>Ataque: <span id="lblRivalAtk">0</span></p>
-        </div>
-      </div>
-
-      <div style="text-align: center;">
-        <button id="btnAtacar" style="font-size: 20px; padding: 15px 40px; cursor: pointer;">
-          ATACAR
-        </button>
-      </div>
-
-    </div>
-
-    <h3>Registro de Batalla</h3>
-    <ul id="messages" style="height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9;"></ul>
-
-    <script type="module" src="./src/main.ts"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BATALLA FRIKI</title>
+</head>
+<body>
+  
+</body>
 </html>

@@ -1,28 +1,32 @@
 services:
+  # Servicio de Base de Datos
   db:
     image: postgres:17-alpine
-    container_name: ejemploPrisma-db
+    container_name: batallaFriki-db
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Chubaca2025
-      POSTGRES_DB: ejemploPrisma
+      POSTGRES_PASSWORD: diego
+      POSTGRES_DB: batallaFriki
     ports:
-      - "5433:5432"
+      - "5432:5432" # Mapeamos al 5432 de tu PC para que puedas verla con un cliente SQL si quieres
     volumes:
       - db_data:/var/lib/postgresql/data
 
+  # Servicio de tu Aplicación NestJS
   app:
     build: .
-    container_name: ejemploPrisma-app
+    container_name: batallaFriki-backend
+    # El comando asegura que Prisma se genere antes de arrancar
     command: sh -c "yarn prisma generate && yarn start:dev"
     volumes:
-      - .:/app
-      - /app/node_modules
+      - .:/app             # Sincroniza tu carpeta local con el contenedor (Hot Reload)
+      - /app/node_modules  # Evita que se borren los módulos dentro del contenedor
     ports:
-      - "3000:3000"
+      - "3000:3000"        # Acceso desde localhost:3000
     environment:
-      DATABASE_URL: postgresql://postgres:Chubaca2025@db:5432/ejemploPrisma?schema=public
+      # IMPORTANTE: El host es 'db' (el nombre del servicio arriba), no 'localhost'
+      DATABASE_URL: postgresql://postgres:diego@db:5432/batallaFriki?schema=public
     depends_on:
       - db
 

@@ -19,7 +19,7 @@ export class PersonajesBdController {
 
   @Get()
   @UseGuards(JwtGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles('ADMIN', 'USER')
   findAll() {
     return this.personajesBdService.findAll();
   }

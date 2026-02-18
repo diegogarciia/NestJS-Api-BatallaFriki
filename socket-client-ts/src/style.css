@@ -1,0 +1,147 @@
+:root {
+  font-family: Arial, sans-serif;
+  background-color: #222;
+  color: white;
+}
+body {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+#app {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+}
+.panel {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #444;
+}
+.hidden {
+  display: none !important;
+}
+input,
+select {
+  padding: 8px;
+  margin: 5px 0;
+  width: 100%;
+  box-sizing: border-box;
+  background: #444;
+  border: 1px solid #555;
+  color: white;
+}
+button {
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+button:hover {
+  opacity: 0.9;
+}
+.btn-logout {
+  background-color: #dc3545;
+  width: auto;
+  padding: 5px 15px;
+}
+.btn-delete {
+  background-color: #dc3545;
+  width: auto;
+  padding: 2px 8px;
+  margin: 0;
+}
+.btn-primary {
+  background-color: #28a745;
+  font-size: 1.1em;
+}
+.btn-attack {
+  background-color: #ffc107;
+  color: black;
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 15px;
+}
+.error {
+  color: #ff6b6b;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #555;
+  margin-bottom: 15px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  text-align: left;
+}
+.list {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #2a2a2a;
+}
+.list li {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9em;
+}
+.fighters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.fighter {
+  width: 45%;
+}
+.vs {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: orange;
+}
+.bar-bg {
+  background: #555;
+  height: 20px;
+  width: 100%;
+  position: relative;
+  margin: 5px 0;
+}
+.bar-fill {
+  background: #28a745;
+  height: 100%;
+  width: 100%;
+  transition: width 0.3s;
+}
+.bar-fill.enemy {
+  background: #dc3545;
+}
+.logs {
+  background: black;
+  height: 150px;
+  overflow-y: auto;
+  text-align: left;
+  padding: 10px;
+  font-family: monospace;
+  border: 1px solid #555;
+}
+.logs ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

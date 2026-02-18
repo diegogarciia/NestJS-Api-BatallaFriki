@@ -2,45 +2,71 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Socket Client TS + Vite</title>
+    <title>Cliente de Batalla (Socket.IO)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body style="padding:20px; font-family:sans-serif">
 
-    <h1>Socket.IO Client</h1>
+    <h1>Arena de Batalla</h1>
 
     <p>
       Estado del servidor:
-      <span id="lblOn" style="color:green; display:none">Online</span>
-      <span id="lblOff" style="color:red">Offline</span>
+      <span id="lblOn" style="color:green; display:none">Online 🟢</span>
+      <span id="lblOff" style="color:red">Offline 🔴</span>
     </p>
 
     <p>
-      ID del cliente: <span id="clientId" style="color:blue"></span>
+      ID del Socket: <span id="clientId" style="color:blue">Connecting...</span>
     </p>
 
-    <!-- Mensaje general -->
-    <h3>Mensaje general</h3>
-    <input id="txtMensajeGeneral" placeholder="Escribe un mensaje general…" />
-    <button id="btnEnviarGeneral">Enviar general</button>
+    <hr>
 
-    <!-- Mensaje privado -->
-    <h3>Mensaje privado</h3>
-    <select id="selectClientes"></select>
-    <input id="txtMensajePrivado" placeholder="Escribe un mensaje privado…" />
-    <button id="btnEnviarPrivado">Enviar privado</button>
+    <div id="divSetup">
+      <h3>1. Configuración de Partida</h3>
+      <p>Introduce los IDs de tu Base de Datos:</p>
+      
+      <div style="margin-bottom: 10px;">
+        <label>ID Usuario:</label>
+        <input id="txtUserId" type="number" value="5" placeholder="Ej: 5" />
+      </div>
 
-    <!-- Selección de salas -->
-    <h3>Enviar mensaje a sala:</h3>
-    <select id="selectSalas">
-      <option value="Aldeanos">Aldeanos</option>
-      <option value="Lobos">Lobos</option>
-    </select>
-    <input id="txtMensajeSala" placeholder="Mensaje a sala…" />
-    <button id="btnEnviarSala">Enviar</button>
+      <div style="margin-bottom: 10px;">
+        <label>ID Personaje:</label>
+        <input id="txtHeroId" type="number" value="1" placeholder="Ej: 1" />
+      </div>
 
-    <h3>Mensajes recibidos</h3>
-    <ul id="messages"></ul>
+      <button id="btnIniciar">Iniciar Partida (HTTP)</button>
+      <span id="setupMessage" style="color: orange; margin-left: 10px;"></span>
+    </div>
+
+    <div id="divArena" style="display: none; margin-top: 30px; padding: 20px; border: 2px solid #333; border-radius: 10px;">
+      
+      <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 20px;">
+        <div>
+          <h2 id="lblPlayerName" style="color: blue;">Jugador</h2>
+          <h1 id="lblPlayerHp">100 HP</h1>
+          <p>Ataque: <span id="lblPlayerAtk">0</span></p>
+        </div>
+
+        <h1 style="align-self: center;">VS</h1>
+
+        <div>
+          <h2 id="lblRivalName" style="color: red;">Rival</h2>
+          <h1 id="lblRivalHp">100 HP</h1>
+          <p>Ataque: <span id="lblRivalAtk">0</span></p>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button id="btnAtacar" style="font-size: 20px; padding: 15px 40px; cursor: pointer;">
+          ATACAR
+        </button>
+      </div>
+
+    </div>
+
+    <h3>Registro de Batalla</h3>
+    <ul id="messages" style="height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9;"></ul>
 
     <script type="module" src="./src/main.ts"></script>
   </body>

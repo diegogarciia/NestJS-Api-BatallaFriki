@@ -1,9 +1,9 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -13,56 +13,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  justify-content: center;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  margin-bottom: 20px;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
+/* --- ESTILOS GENERALES --- */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -70,27 +36,103 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #646cff; /* Azul Vite */
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: border-color 0.25s, background-color 0.25s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: #535bf2;
+}
+button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: white;
+  margin-right: 10px;
+}
+
+/* --- ZONA DE CONFIGURACIÓN (SETUP) --- */
+#divSetup {
+  background-color: #1a1a1a;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#divSetup label {
+  display: block;
+  margin-bottom: 5px;
+  color: #aaa;
+}
+
+#divSetup input {
+  width: 100%;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+#divSetup button {
+  width: 100%;
+  background-color: #e67e22; /* Naranja */
+}
+
+/* --- ZONA DE ARENA --- */
+#divArena {
+  background-color: #1a1a1a; /* Fondo oscuro para la arena */
+  transition: background-color 0.5s ease; /* Transición suave si cambiamos color al ganar */
+}
+
+/* Barras de Vida (Lo más importante) */
+/* Nota: En el HTML usamos estilos en línea para el ancho, aquí damos el color base */
+
+#lblPlayerHp, #lblRivalHp {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* --- LOGS DE BATALLA --- */
+ul#messages {
+  list-style-type: none;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #000;
+  border: 1px solid #333;
+  border-radius: 8px;
+  height: 200px;
+  overflow-y: auto;
+  text-align: left;
+  font-family: monospace;
+}
+
+ul#messages li {
+  padding: 4px 0;
+  border-bottom: 1px solid #222;
+  color: #0f0; /* Verde Terminal */
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #333; 
+}
+::-webkit-scrollbar-thumb {
+  background: #555; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #777; 
 }

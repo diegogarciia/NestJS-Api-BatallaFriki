@@ -117,4 +117,40 @@ export class JuegoService {
 
     return partida;
   }
+
+  async registrarResultadoPvP(ganadorId: number, perdedorId: number) {
+    await this.procesarVictoria(ganadorId);
+    await this.procesarDerrota(perdedorId);
+  }
+
+  private async procesarVictoria(userId: number) {
+    const usuario = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!usuario) return;
+
+    const experienciaGanada = 10;
+    const nuevaExperiencia = usuario.experiencia + experienciaGanada;
+    const nuevoNivel = Math.floor(nuevaExperiencia / 100) + 1;
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { 
+        victorias: { increment: 1 }, 
+        experiencia: nuevaExperiencia,
+        nivel: nuevoNivel  
+      }
+    });
+  }
+
+  private async procesarDerrota(userId: number) {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { derrotas: { increment: 1 } }
+    });
+  }
+  
+  async obtenerEstadisticasPersonaje(id: number) {
+    const personaje = await this.prisma.character.findUnique({ where: { id } });
+    if (!personaje) throw new NotFoundException('Personaje no encontrado');
+    return personaje;
+  }
 }

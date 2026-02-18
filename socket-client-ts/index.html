@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batalla Friki</title>
 </head>
 <body>
@@ -18,43 +17,19 @@
         </div>
 
         <div id="admin-section" class="panel hidden">
-            <div class="header">
-                <h2>Panel Admin</h2>
-                <button class="btn-logout">Salir</button>
-            </div>
-            
+            <div class="header"><h2>Panel Admin</h2><button class="btn-logout">Salir</button></div>
             <div class="grid">
                 <div>
-                    <h3>Crear Usuario</h3>
-                    <div class="form-row">
-                        <input id="new-nick" placeholder="Nick">
-                        <input id="new-email" placeholder="Email">
-                        <input id="new-pass" type="password" placeholder="Password">
-                        
-                        <label style="font-size: 0.8em; color: #aaa;">Rol:</label>
-                        <select id="new-role">
-                            <option value="USER">Jugador (USER)</option>
-                            <option value="ADMIN">Administrador</option>
-                        </select>
-
-                        <button id="btnCreateUser">Crear Usuario</button>
-                    </div>
+                    <h3>Usuarios</h3>
+                    <input id="new-nick" placeholder="Nick"><input id="new-email" placeholder="Email"><input id="new-pass" type="password" placeholder="Password">
+                    <select id="new-role"><option value="USER">Jugador</option><option value="ADMIN">Admin</option></select>
+                    <button id="btnCreateUser">Crear Usuario</button>
                     <ul id="users-list" class="list"></ul>
                 </div>
-
                 <div>
-                    <h3>Crear Personaje</h3>
-                    <div class="form-row">
-                        <input id="char-name" placeholder="Nombre">
-                        <div style="display: flex; gap: 5px;">
-                            <input id="char-hp" type="number" placeholder="Vida">
-                            <input id="char-atk" type="number" placeholder="Ataque">
-                        </div>
-                        
-                        <input id="char-level" type="number" placeholder="Nivel (Ej: 1, 10...)" value="1">
-                        
-                        <button id="btnCreateChar">Crear Personaje</button>
-                    </div>
+                    <h3>Personajes</h3>
+                    <input id="char-name" placeholder="Nombre"><input id="char-hp" placeholder="HP"><input id="char-atk" placeholder="ATK"><input id="char-level" value="1">
+                    <button id="btnCreateChar">Crear Personaje</button>
                     <ul id="chars-list" class="list"></ul>
                 </div>
             </div>
@@ -62,47 +37,37 @@
 
         <div id="game-section" class="hidden">
             <div id="setup-panel" class="panel">
-                <div class="header">
-                    <h2>Configuracion</h2>
-                    <button class="btn-logout">Salir</button>
-                </div>
+                <div class="header"><h2>Configuración</h2><button class="btn-logout">Salir</button></div>
                 <p>Jugador: <span id="playerName" style="color: yellow; font-weight: bold;"></span></p>
-                
-                <label>Elige tu Personaje:</label>
-                <select id="select-hero"></select>
-
-                <label>Oponente:</label>
+                <label>Personaje:</label><select id="select-hero"></select>
+                <label>Modo:</label>
                 <select id="select-mode">
                     <option value="CPU">Contra la CPU</option>
+                    <option value="PVP">Online</option>
                 </select>
-
-                <button id="btnStartGame" class="btn-primary">INICIAR BATALLA</button>
+                <button id="btnStartGame" class="btn-primary">INICIAR</button>
+                <div id="waiting-msg" class="hidden" style="color:orange; margin-top:10px;">Buscando rival...</div>
                 <p id="gameError" class="error"></p>
             </div>
 
             <div id="arena-panel" class="panel hidden">
                 <div class="fighters">
                     <div class="fighter">
-                        <h3 id="p1-name">Jugador</h3>
+                        <h3 id="p1-name">TÚ</h3>
                         <div class="bar-bg"><div id="p1-bar" class="bar-fill"></div></div>
-                        <p>HP: <span id="p1-val"></span> | ATQ: <span id="p1-atk"></span></p>
+                        <p>HP: <span id="p1-val"></span></p>
                     </div>
                     <div class="vs">VS</div>
                     <div class="fighter">
-                        <h3 id="p2-name">Rival</h3>
+                        <h3 id="p2-name">RIVAL</h3>
                         <div class="bar-bg"><div id="p2-bar" class="bar-fill enemy"></div></div>
-                        <p>HP: <span id="p2-val"></span> | ATQ: <span id="p2-atk"></span></p>
+                        <p>HP: <span id="p2-val"></span></p>
                     </div>
                 </div>
-
+                <p id="turn-indicator" style="text-align:center; font-weight:bold;"></p>
                 <div class="actions">
                     <button id="btnAttack" class="btn-attack">ATACAR</button>
-                    <button id="btnRestart" class="hidden">Nueva Partida</button>
-                </div>
-
-                <div class="logs">
-                    <ul id="battle-logs"></ul>
-                </div>
+                    </div>
             </div>
         </div>
     </div>

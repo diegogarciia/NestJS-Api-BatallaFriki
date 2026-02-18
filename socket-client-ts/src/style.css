@@ -145,3 +145,15 @@ button:hover {
   padding: 0;
   margin: 0;
 }
+
+.btn-attack:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    border: 1px solid #444;
+}
+
+.btn-attack:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.6;
+}

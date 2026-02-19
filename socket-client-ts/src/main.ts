@@ -1,7 +1,8 @@
 import './style.css';
 import { io, Socket } from 'socket.io-client';
 
-const API_URL = 'http://localhost:3000';
+const currentHostname = window.location.hostname;
+const API_URL = `http://${currentHostname}:3000`;
 let token: string | null = localStorage.getItem('token');
 let socket: Socket | null = null;
 let currentUser: any = null;

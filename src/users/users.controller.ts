@@ -30,7 +30,6 @@ export class UsersController {
 
   @Get(':id')
   @UseGuards(JwtGuard, RolesGuard)
-  @Roles('ADMIN')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }

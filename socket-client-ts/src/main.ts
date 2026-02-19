@@ -52,6 +52,7 @@ function checkRole(user: any) {
         gameSection.classList.remove('hidden');
         document.getElementById('playerName')!.innerText = `${user.nick} | Nivel ${user.nivel} | Victorias: ${user.victorias} | Derrotas: ${user.derrotas}`;
         loadGameSetup();
+        loadRanking();
         connectSocket();
     }
 }
@@ -64,6 +65,7 @@ async function refreshUserProfile() {
         if (res.ok) {
             currentUser = await res.json();
             checkRole(currentUser); 
+            loadRanking();
         }
     } catch (e) {
         console.error("Error al refrescar perfil", e);
@@ -251,6 +253,29 @@ document.getElementById('btnCreateChar')?.addEventListener('click', async () => 
         getChars();
     }
 });
+
+async function loadRanking() {
+    try {
+        const res = await fetch(`${API_URL}/users/ranking`, { 
+            headers: { Authorization: `Bearer ${token}` } 
+        });
+        
+        if (res.ok) {
+            let ranking = await res.json();
+            
+            ranking = ranking.sort((a: any, b: any) => (b.victorias || 0) - (a.victorias || 0)).slice(0, 5);
+            
+            (document.getElementById('ranking-list')!).innerHTML = ranking.map((u: any, i: number) => `
+                <li style="display: flex; justify-content: space-between; background: #222; margin-bottom: 5px; padding: 8px; border-radius: 5px;">
+                    <span><strong>#${i + 1} </strong>${u.nick}</span>
+                    <span style="color: gold; font-weight: bold;">${u.victorias || 0} Victorias</span>
+                </li>
+            `).join('');
+        }
+    } catch (e) {
+        console.error("No se pudo cargar el ranking", e);
+    }
+}
 
 async function loadGameSetup() {
     const res = await fetch(`${API_URL}/personajes-bd`, { headers: { Authorization: `Bearer ${token}` } });

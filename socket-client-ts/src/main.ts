@@ -183,6 +183,7 @@ document.getElementById('btnCreateChar')?.addEventListener('click', async () => 
     const nameIn = document.getElementById('char-name') as HTMLInputElement;
     const hpIn = document.getElementById('char-hp') as HTMLInputElement;
     const atkIn = document.getElementById('char-atk') as HTMLInputElement;
+    const nvlIn = document.getElementById('char-level') as HTMLInputElement;
 
     if(!nameIn.value) return alert("Ponle nombre al personaje");
 
@@ -193,7 +194,7 @@ document.getElementById('btnCreateChar')?.addEventListener('click', async () => 
             nombre: nameIn.value, 
             vida: Number(hpIn.value), 
             ataque: Number(atkIn.value), 
-            nivel: 1
+            nivel: Number(nvlIn.value)
         })
     });
 

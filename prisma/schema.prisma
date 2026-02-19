@@ -22,7 +22,7 @@ model User {
 
 model Character {
   id                   Int     @id @default(autoincrement())
-  nombre               String
+  nombre               String  @unique
   vida                 Int
   ataque               Int
   nivel                Int    

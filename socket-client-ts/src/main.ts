@@ -47,9 +47,23 @@ function checkRole(user: any) {
         loadAdmin();
     } else {
         gameSection.classList.remove('hidden');
-        document.getElementById('playerName')!.innerText = `${user.nick}`;
+        document.getElementById('playerName')!.innerText = `${user.nick} | Nivel ${user.nivel} | Victorias: ${user.victorias} | Derrotas: ${user.derrotas}`;
         loadGameSetup();
         connectSocket();
+    }
+}
+
+async function refreshUserProfile() {
+    try {
+        const res = await fetch(`${API_URL}/users/${currentUser.id}`, { 
+            headers: { Authorization: `Bearer ${token}` } 
+        });
+        if (res.ok) {
+            currentUser = await res.json();
+            checkRole(currentUser); 
+        }
+    } catch (e) {
+        console.error("Error al refrescar perfil", e);
     }
 }
 
@@ -66,9 +80,10 @@ function connectSocket() {
     });
 
     socket.on('final-batalla', (data: any) => {
-        setTimeout(() => {
+        setTimeout(async () => {
             const soyGanador = Number(data.ganador) === Number(currentUser.id);
             alert(soyGanador ? '¡VICTORIA!' : 'DERROTA');
+            await refreshUserProfile();
             arenaPanel.classList.add('hidden');
             setupPanel.classList.remove('hidden');
             btnStart.disabled = false;

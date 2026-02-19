@@ -41,7 +41,9 @@ export class AuthService {
         email: user.email,
         roles: [user.rol], 
         nivel: user.nivel,
-        experiencia: user.experiencia
+        experiencia: user.experiencia,
+        victorias: user.victorias,
+        derrotas: user.derrotas
       }
     };
   }

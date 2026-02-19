@@ -6,6 +6,8 @@ const API_URL = `http://${currentHostname}:3000`;
 let token: string | null = localStorage.getItem('token');
 let socket: Socket | null = null;
 let currentUser: any = null;
+let editingUserId: number | null = null;
+let editingCharId: number | null = null;
 
 const authSection = document.getElementById('auth-section')!;
 const adminSection = document.getElementById('admin-section')!;
@@ -161,13 +163,34 @@ async function loadAdmin() { await getUsers(); await getChars(); }
 async function getUsers() {
     try {
         const res = await fetch(`${API_URL}/users`, { headers: { Authorization: `Bearer ${token}` } });
-        if(res.ok) (document.getElementById('users-list')!).innerHTML = (await res.json()).map((u:any) => `<li>${u.nick} <button onclick="window.delUser(${u.id})">X</button></li>`).join('');
+        if(res.ok) {
+            const users = await res.json();
+            (document.getElementById('users-list')!).innerHTML = users.map((u:any) => `
+                <li>
+                    ${u.nick} 
+                    <div>
+                        <button onclick='window.prepareEditUser(${JSON.stringify(u)})'>Editar Usuario</button>
+                        <button onclick="window.delUser(${u.id})">X</button>
+                    </div>
+                </li>`).join('');
+        }
     } catch(e){}
 }
+
 async function getChars() {
     try {
         const res = await fetch(`${API_URL}/personajes-bd`, { headers: { Authorization: `Bearer ${token}` } });
-        if(res.ok) (document.getElementById('chars-list')!).innerHTML = (await res.json()).map((c:any) => `<li>${c.nombre} <button onclick="window.delChar(${c.id})">X</button></li>`).join('');
+        if(res.ok) {
+            const chars = await res.json();
+            (document.getElementById('chars-list')!).innerHTML = chars.map((c:any) => `
+                <li>
+                    ${c.nombre} 
+                    <div>
+                        <button onclick='window.prepareEditChar(${JSON.stringify(c)})'>Editar Personaje</button>
+                        <button onclick="window.delChar(${c.id})">X</button>
+                    </div>
+                </li>`).join('');
+        }
     } catch(e){}
 }
 
@@ -179,19 +202,21 @@ document.getElementById('btnCreateUser')?.addEventListener('click', async () => 
 
     if(!nickIn.value || !emailIn.value) return alert("Rellena los datos");
 
-    const res = await fetch(`${API_URL}/users`, {
-        method:'POST',
+    const url = editingUserId ? `${API_URL}/users/${editingUserId}` : `${API_URL}/users`;
+    const method = editingUserId ? 'PATCH' : 'POST';
+
+    const res = await fetch(url, {
+        method: method,
         headers:{'Content-Type':'application/json', Authorization:`Bearer ${token}`},
-        body:JSON.stringify({ nick: nickIn.value, email: emailIn.value, password: passIn.value, rol: roleIn.value })
+        body:JSON.stringify({ nick: nickIn.value, email: emailIn.value, password: passIn.value || undefined, rol: roleIn.value })
     });
 
     if(res.ok) {
-        const data = await res.json();
-        alert(`Usuario "${data.user ? data.user.nick : nickIn.value}" creado con éxito.`);
+        alert(editingUserId ? "Usuario actualizado" : "Usuario creado");
+        editingUserId = null;
+        document.getElementById('btnCreateUser')!.innerText = "Crear Usuario";
         nickIn.value = ''; emailIn.value = ''; passIn.value = '';
         getUsers();
-    } else {
-        alert("Error al crear usuario");
     }
 });
 
@@ -203,8 +228,11 @@ document.getElementById('btnCreateChar')?.addEventListener('click', async () => 
 
     if(!nameIn.value) return alert("Ponle nombre al personaje");
 
-    const res = await fetch(`${API_URL}/personajes-bd`,{
-        method:'POST',
+    const url = editingCharId ? `${API_URL}/personajes-bd/${editingCharId}` : `${API_URL}/personajes-bd`;
+    const method = editingCharId ? 'PATCH' : 'POST';
+
+    const res = await fetch(url, {
+        method: method,
         headers:{'Content-Type':'application/json',Authorization:`Bearer ${token}`},
         body:JSON.stringify({
             nombre: nameIn.value, 
@@ -216,12 +244,11 @@ document.getElementById('btnCreateChar')?.addEventListener('click', async () => 
     });
 
     if(res.ok) {
-        const data = await res.json();
-        alert(`Personaje "${data.nombre}" creado con éxito.`);
+        alert(editingCharId ? "Personaje actualizado" : "Personaje creado");
+        editingCharId = null;
+        document.getElementById('btnCreateChar')!.innerText = "Crear Personaje";
         nameIn.value = ''; hpIn.value = ''; atkIn.value = ''; nvlIn.value = '1';
         getChars();
-    } else {
-        alert("Error al crear personaje");
     }
 });
 
@@ -235,3 +262,20 @@ async function loadGameSetup() {
 }
 (window as any).delUser = async (id: number) => { if(confirm('Borrar?')) await fetch(`${API_URL}/users/${id}`, {method:'DELETE',headers:{Authorization:`Bearer ${token}`}}); getUsers(); };
 (window as any).delChar = async (id: number) => { if(confirm('Borrar?')) await fetch(`${API_URL}/personajes-bd/${id}`, {method:'DELETE',headers:{Authorization:`Bearer ${token}`}}); getChars(); };
+(window as any).prepareEditUser = (user: any) => {
+    editingUserId = user.id;
+    (document.getElementById('new-nick') as HTMLInputElement).value = user.nick;
+    (document.getElementById('new-email') as HTMLInputElement).value = user.email;
+    (document.getElementById('new-role') as HTMLSelectElement).value = user.rol;
+    (document.getElementById('new-pass') as HTMLInputElement).placeholder = "Nueva password (opcional)";
+    document.getElementById('btnCreateUser')!.innerText = "Guardar Cambios";
+};
+
+(window as any).prepareEditChar = (char: any) => {
+    editingCharId = char.id;
+    (document.getElementById('char-name') as HTMLInputElement).value = char.nombre;
+    (document.getElementById('char-hp') as HTMLInputElement).value = char.vida;
+    (document.getElementById('char-atk') as HTMLInputElement).value = char.ataque;
+    (document.getElementById('char-level') as HTMLInputElement).value = char.nivel;
+    document.getElementById('btnCreateChar')!.innerText = "Guardar Cambios";
+};

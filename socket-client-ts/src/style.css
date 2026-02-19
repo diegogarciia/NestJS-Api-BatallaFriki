@@ -1,0 +1,250 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a; 
+    color: #f0f0f0;           
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#app {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #646cff; 
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+h2, h3 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.panel {
+    background-color: #2d2d2d;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    border: 1px solid #3d3d3d;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 16px;
+    background-color: #1a1a1a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #646cff;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+    background-color: #444;
+    color: white;
+    margin-top: 5px;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+.btn-primary, #btnLogin {
+    background-color: #646cff;
+}
+
+.btn-logout, .btn-delete {
+    background-color: #ff4757;
+    width: auto; 
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.btn-attack {
+    background-color: #ffc107; 
+    color: #000;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    padding: 15px;
+    box-shadow: 0 4px 0 #b38800;
+    margin-top: 15px;
+}
+
+.btn-attack:active {
+    box-shadow: 0 0 0 #b38800;
+    transform: translateY(4px);
+}
+
+.btn-attack:disabled {
+    background-color: #555;
+    color: #aaa;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+    text-align: left;
+}
+
+.list {
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+    background: #222;
+    border-radius: 6px;
+    border: 1px solid #444;
+    margin-top: 10px;
+}
+
+.list li {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.list li:last-child {
+    border-bottom: none;
+}
+
+.fighters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.fighter {
+    width: 45%;
+    text-align: center;
+}
+
+.fighter h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #ddd;
+}
+
+.vs {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #ffc107;
+    font-style: italic;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.bar-bg {
+    width: 100%;
+    height: 25px;
+    background-color: #111;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid #333;
+    margin: 5px 0;
+    position: relative;
+}
+
+.bar-fill {
+    height: 100%;
+    width: 100%; 
+    background-color: #2ecc71; 
+    transition: width 0.4s ease-out;
+}
+
+.bar-fill.enemy {
+    background-color: #ff4757; 
+}
+
+#turn-indicator {
+    background-color: #222;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    border: 1px solid #444;
+}
+
+.logs {
+    margin-top: 15px;
+    height: 100px;
+    overflow-y: auto;
+    background: #000;
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #0f0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.error {
+    color: #ff6b6b;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr; 
+    }
+    .fighters {
+        gap: 10px;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+}

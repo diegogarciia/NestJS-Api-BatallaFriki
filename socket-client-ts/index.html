@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Batalla Friki</title>
+</head>
+<body>
+    <div id="app">
+        <h1>BATALLA FRIKI</h1>
+
+        <div id="auth-section" class="panel">
+            <h2>Acceso</h2>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button id="btnLogin">Entrar</button>
+            <p id="loginStatus" class="error"></p>
+        </div>
+
+        <div id="admin-section" class="panel hidden">
+            <div class="header"><h2>Panel Admin</h2><button class="btn-logout">Salir</button></div>
+            <div class="grid">
+                <div>
+                    <h3>Usuarios</h3>
+                    <input id="new-nick" placeholder="Nick"><input id="new-email" placeholder="Email"><input id="new-pass" type="password" placeholder="Password">
+                    <select id="new-role"><option value="USER">Jugador</option><option value="ADMIN">Admin</option></select>
+                    <button id="btnCreateUser">Crear Usuario</button>
+                    <ul id="users-list" class="list"></ul>
+                </div>
+                <div>
+                    <h3>Personajes</h3>
+                    <input id="char-name" placeholder="Nombre"><input id="char-hp" placeholder="HP"><input id="char-atk" placeholder="ATK"><input id="char-level" value="1">
+                    <button id="btnCreateChar">Crear Personaje</button>
+                    <ul id="chars-list" class="list"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-section" class="hidden">
+            <div id="setup-panel" class="panel">
+                <div class="header"><h2>Configuración</h2><button class="btn-logout">Salir</button></div>
+                <p>Jugador: <span id="playerName" style="color: yellow; font-weight: bold;"></span></p>
+                <label>Personaje:</label><select id="select-hero"></select>
+                <label>Modo:</label>
+                <select id="select-mode">
+                    <option value="CPU">Contra la CPU</option>
+                    <option value="PVP">Online</option>
+                </select>
+                <button id="btnStartGame" class="btn-primary">INICIAR</button>
+                <div id="waiting-msg" class="hidden" style="color:orange; margin-top:10px;">Buscando rival...</div>
+                <p id="gameError" class="error"></p>
+                <hr style="margin: 20px 0; border-color: #444;">
+                <h3>Ranking Jugadores</h3>
+                <ul id="ranking-list" class="list" style="margin-top: 10px; padding: 0;"></ul>
+            </div>
+
+            <div id="arena-panel" class="panel hidden">
+                <div class="fighters">
+                    <div class="fighter">
+                        <h3 id="p1-name">TÚ</h3>
+                        <div class="bar-bg"><div id="p1-bar" class="bar-fill"></div></div>
+                        <p>HP: <span id="p1-val"></span></p>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="fighter">
+                        <h3 id="p2-name">RIVAL</h3>
+                        <div class="bar-bg"><div id="p2-bar" class="bar-fill enemy"></div></div>
+                        <p>HP: <span id="p2-val"></span></p>
+                    </div>
+                </div>
+                <p id="turn-indicator" style="text-align:center; font-weight:bold;"></p>
+                <div class="actions">
+                    <button id="btnAttack" class="btn-attack">ATACAR</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

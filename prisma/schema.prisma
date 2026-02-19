@@ -1,0 +1,31 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique 
+  password    String   
+  nick        String   @unique 
+  rol         String   @default("USER")
+  nivel       Int      @default(1)
+  experiencia Int      @default(0)
+  victorias   Int      @default(0)
+  derrotas    Int      @default(0)
+}
+
+model Character {
+  id                   Int     @id @default(autoincrement())
+  nombre               String  @unique
+  vida                 Int
+  ataque               Int
+  nivel                Int    
+  nivelMinimoObtencion Int     @default(1) 
+  imagen               String?
+}

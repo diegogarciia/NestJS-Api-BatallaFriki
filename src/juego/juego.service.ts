@@ -1,0 +1,156 @@
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { CreateJuegoDto, TipoOponente } from './dto/create-juego.dto';
+import { Juego } from './entities/juego.entity';
+
+@Injectable()
+export class JuegoService {
+  private partidasActivas: Map<number, Juego> = new Map();
+
+  constructor(private readonly prisma: PrismaService) {}
+
+  async iniciarPartida(usuarioId: number, createJuegoDto: CreateJuegoDto): Promise<Juego> {
+    const usuario = await this.prisma.user.findUnique({ where: { id: usuarioId } });
+    const personajeJugador = await this.prisma.character.findUnique({ where: { id: createJuegoDto.personajeJugadorId } });
+
+    if (!usuario || !personajeJugador) {
+      throw new NotFoundException('Usuario o Personaje no encontrado');
+    }
+
+    const nivelRequerido = personajeJugador.nivel; 
+    
+    if (usuario.nivel < nivelRequerido) {
+      throw new BadRequestException(
+        `Nivel insuficiente. Tu nivel es ${usuario.nivel} pero este personaje requiere nivel ${nivelRequerido}.`
+      );
+    }
+
+    const personajeRivalId = createJuegoDto.personajeOponenteId || 1; 
+    const personajeRival = await this.prisma.character.findUnique({ where: { id: personajeRivalId } });
+    
+    if (!personajeRival) {
+      throw new NotFoundException('El personaje rival no existe');
+    }
+
+    const nuevaPartida: Juego = {
+      id: `game_${usuarioId}_${Date.now()}`,
+      jugadorId: usuario.id,
+      nombreJugador: usuario.nick,
+      vidaMaxJugador: personajeJugador.vida,
+      vidaActualJugador: personajeJugador.vida,
+      ataqueJugador: personajeJugador.ataque,
+      
+      nombreRival: personajeRival.nombre,
+      vidaMaxRival: personajeRival.vida,
+      vidaActualRival: personajeRival.vida,
+      ataqueRival: personajeRival.ataque,
+
+      rivalEsCpu: createJuegoDto.tipoOponente === TipoOponente.CPU,
+      oponenteId: createJuegoDto.tipoOponente === TipoOponente.USUARIO ? createJuegoDto.oponenteId : undefined,
+      
+      turno: 'JUGADOR',
+      finalizado: false,
+    };
+
+    this.partidasActivas.set(usuarioId, nuevaPartida);
+    return nuevaPartida;
+  }
+
+  async atacar(usuarioId: number): Promise<Juego> {
+    const partida = this.partidasActivas.get(usuarioId);
+
+    if (!partida) {
+      throw new NotFoundException('No tienes ninguna partida activa');
+    }
+
+    if (partida.finalizado) {
+      return partida;
+    }
+
+    partida.vidaActualRival -= partida.ataqueJugador;
+    
+    if (partida.vidaActualRival <= 0) {
+      partida.vidaActualRival = 0;
+      partida.finalizado = true;
+      partida.ganadorId = usuarioId;
+      
+      const usuario = await this.prisma.user.findUnique({ where: { id: usuarioId } });
+      
+      if (!usuario) {
+        throw new NotFoundException('Usuario no encontrado');
+      }
+      
+      const experienciaGanada = 10;
+      const nuevaExperiencia = usuario.experiencia + experienciaGanada;
+      
+      const nuevoNivel = Math.floor(nuevaExperiencia / 100) + 1;
+
+      await this.prisma.user.update({
+        where: { id: usuarioId },
+        data: { 
+          victorias: { increment: 1 }, 
+          experiencia: nuevaExperiencia,
+          nivel: nuevoNivel  
+        }
+      });
+
+      this.partidasActivas.delete(usuarioId); 
+
+      return partida;
+    }
+
+    if (partida.rivalEsCpu) {
+      partida.vidaActualJugador -= partida.ataqueRival;
+
+      if (partida.vidaActualJugador <= 0) {
+        partida.vidaActualJugador = 0;
+        partida.finalizado = true;
+        
+        await this.prisma.user.update({
+          where: { id: usuarioId },
+          data: { derrotas: { increment: 1 } }
+        });
+        
+        this.partidasActivas.delete(usuarioId);
+      }
+    }
+
+    return partida;
+  }
+
+  async registrarResultadoPvP(ganadorId: number, perdedorId: number) {
+    await this.procesarVictoria(ganadorId);
+    await this.procesarDerrota(perdedorId);
+  }
+
+  private async procesarVictoria(userId: number) {
+    const usuario = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!usuario) return;
+
+    const experienciaGanada = 10;
+    const nuevaExperiencia = usuario.experiencia + experienciaGanada;
+    const nuevoNivel = Math.floor(nuevaExperiencia / 100) + 1;
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { 
+        victorias: { increment: 1 }, 
+        experiencia: nuevaExperiencia,
+        nivel: nuevoNivel  
+      }
+    });
+  }
+
+  private async procesarDerrota(userId: number) {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { derrotas: { increment: 1 } }
+    });
+  }
+  
+  async obtenerEstadisticasPersonaje(id: number) {
+    const personaje = await this.prisma.character.findUnique({ where: { id } });
+    if (!personaje) throw new NotFoundException('Personaje no encontrado');
+    return personaje;
+  }
+}

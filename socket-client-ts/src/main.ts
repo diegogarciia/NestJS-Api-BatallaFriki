@@ -192,16 +192,17 @@ document.getElementById('btnCreateChar')?.addEventListener('click', async () => 
         headers:{'Content-Type':'application/json',Authorization:`Bearer ${token}`},
         body:JSON.stringify({
             nombre: nameIn.value, 
-            vida: Number(hpIn.value), 
-            ataque: Number(atkIn.value), 
-            nivel: Number(nvlIn.value)
+            vida: parseInt(hpIn.value), 
+            ataque: parseInt(atkIn.value), 
+            nivel: parseInt(nvlIn.value),
+            nivelMinimoObtencion: parseInt(nvlIn.value)
         })
     });
 
     if(res.ok) {
         const data = await res.json();
         alert(`Personaje "${data.nombre}" creado con éxito.`);
-        nameIn.value = ''; hpIn.value = ''; atkIn.value = '';
+        nameIn.value = ''; hpIn.value = ''; atkIn.value = ''; nvlIn.value = '1';
         getChars();
     } else {
         alert("Error al crear personaje");

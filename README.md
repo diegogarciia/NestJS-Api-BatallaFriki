@@ -1,98 +1,104 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Batalla Friki
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Batalla Friki es una aplicacion web multijugador que permite a los usuarios registrarse, progresar de nivel y enfrentarse en combates por turnos en tiempo real. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+El proyecto consta de una arquitectura cliente-servidor, utilizando una API REST para la gestion de datos y persistencia, y WebSockets para la sincronizacion de las batallas en vivo.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Caracteristicas Principales
 
-## Project setup
+### 1. Sistema de Usuarios y Roles
+- **Roles**: Soporte para usuarios `ADMIN` y `USER`.
+- **Progresion**: Los jugadores ganan experiencia (XP) tras cada victoria (+10 XP). Al alcanzar 100 XP, el jugador sube de nivel automaticamente.
+- **Estadisticas**: Registro persistente de batallas ganadas y perdidas.
+- **Seguridad**: Rutas del backend protegidas mediante JWT y validacion de roles (Guards de NestJS).
 
-```bash
-$ yarn install
-```
+### 2. Gestion de Personajes
+- **Atributos**: Cada personaje cuenta con puntos de vida (HP), ataque y nivel.
+- **Restriccion por nivel**: Los jugadores solo pueden seleccionar personajes cuyo `nivelMinimoObtencion` sea menor o igual al nivel actual del jugador.
+- **Panel de Administracion**: El rol `ADMIN` dispone de un CRUD completo para crear, editar y eliminar tanto usuarios como personajes de la base de datos.
 
-## Compile and run the project
+### 3. Sistema de Combate en Tiempo Real
+- **Modos de Juego**: 
+  - **Jugador vs CPU**: Combates contra enemigos aleatorios controlados por el servidor.
+  - **Jugador vs Jugador (PvP)**: Sistema de emparejamiento (Matchmaking) en tiempo real.
+- **Sincronizacion**: Uso de WebSockets para emitir el estado de la batalla (barras de vida, turnos y notificaciones de victoria/derrota) a todos los clientes involucrados sin necesidad de recargar la pagina.
 
-```bash
-# development
-$ yarn run start
+### 4. Extras Implementados
+- **Ranking Global**: Tabla de clasificacion en tiempo real que muestra el Top 5 de jugadores con mas victorias.
+- **Multi-dispositivo**: Configuracion de red dinamica que permite jugar desde distintos dispositivos (ordenadores, telefonos moviles) conectados a la misma red local.
 
-# watch mode
-$ yarn run start:dev
+---
 
-# production mode
-$ yarn run start:prod
-```
+## Stack Tecnologico
 
-## Run tests
+- **Backend**: NestJS, TypeScript, Socket.io.
+- **Frontend**: Vanilla JavaScript, HTML5, CSS3, Vite.
+- **Base de Datos**: PostgreSQL.
+- **ORM**: Prisma.
+- **Infraestructura**: Docker y Docker Compose.
 
-```bash
-# unit tests
-$ yarn run test
+---
 
-# e2e tests
-$ yarn run test:e2e
+## Requisitos Previos
 
-# test coverage
-$ yarn run test:cov
-```
+Para ejecutar este proyecto en tu maquina local, es necesario tener instalado:
 
-## Deployment
+- **Docker** y **Docker Compose**.
+- (Opcional) Node.js v18+ si se desea ejecutar el entorno de desarrollo fuera de los contenedores.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+---
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Instalacion y Ejecucion Paso a Paso
+
+### Paso 1: Preparacion del entorno
+Descomprime el proyecto (o clona el repositorio) y abre una terminal en la carpeta raiz del proyecto.
+
+### Paso 2: Despliegue con Docker
+El proyecto esta configurado para levantar la base de datos, el backend y el frontend simultaneamente y ejecutar los seeders iniciales (creando el usuario administrador y los personajes por defecto).
+
+Ejecuta el siguiente comando en la terminal:
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+docker compose up --build -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+*Nota: La etiqueta `--build` asegura que las imagenes se compilen con el codigo mas reciente, y `-d` ejecuta los contenedores en segundo plano.*
 
-## Resources
+### Paso 3: Acceso a la Aplicacion
+Una vez que los contenedores esten funcionando, abre tu navegador web y accede a:
 
-Check out a few resources that may come in handy when working with NestJS:
+```text
+http://localhost:5173
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Para probar el **Panel de Administrador**, puedes utilizar las credenciales generadas por el seeder inicial (revisar el archivo de seeders en el backend para obtener el email y la contrasena por defecto).
 
-## Support
+### Paso 4: Pruebas Multi-dispositivo (Opcional)
+Si deseas acceder al juego desde un telefono movil u otro ordenador en tu casa:
+1. Asegurate de que el dispositivo este conectado a la misma red Wi-Fi.
+2. Averigua la direccion IP local del ordenador donde se ejecuta Docker (ejemplo: `192.168.1.50`).
+3. En el navegador del dispositivo movil, introduce: `http://192.168.1.50:5173`.
+4. El frontend detectara automaticamente la IP y se conectara al backend correspondiente.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## Detencion del Proyecto
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Para detener los servidores y apagar los contenedores, ejecuta el siguiente comando en la raiz del proyecto:
 
-## License
+```bash
+docker compose down
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## Arquitectura de Eventos (WebSockets)
+
+El flujo de una batalla en tiempo real sigue estos eventos principales:
+
+- `unirse-espera`: El cliente solicita entrar a la cola de PvP.
+- `estado-batalla`: El servidor emite la vida maxima, vida actual, ataque y a quien le corresponde el turno.
+- `realizar-ataque`: El cliente emite la accion de ataque en su turno.
+- `final-batalla`: El servidor notifica el fin del combate, declara al ganador y actualiza la experiencia y estadisticas en la base de datos PostgreSQL.

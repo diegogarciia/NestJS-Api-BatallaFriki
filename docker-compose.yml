@@ -1,5 +1,6 @@
+version: "3.9"
+
 services:
-  # Servicio de Base de Datos
   db:
     image: postgres:17-alpine
     container_name: batallaFriki-db
@@ -9,23 +10,40 @@ services:
       POSTGRES_PASSWORD: diego
       POSTGRES_DB: batallaFriki
     ports:
-      - "5432:5432" # Mapeamos al 5432 de tu PC para que puedas verla con un cliente SQL si quieres
+      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
 
-  # Servicio de tu Aplicación NestJS
-  app:
+  backend:
     build: .
     container_name: batallaFriki-backend
-    # El comando asegura que Prisma se genere antes de arrancar
-    command: sh -c "yarn prisma generate && yarn start:dev"
-    volumes:
-      - .:/app             # Sincroniza tu carpeta local con el contenedor (Hot Reload)
-      - /app/node_modules  # Evita que se borren los módulos dentro del contenedor
+    restart: always
     ports:
-      - "3000:3000"        # Acceso desde localhost:3000
+      - "3000:3000"
     environment:
-      # IMPORTANTE: El host es 'db' (el nombre del servicio arriba), no 'localhost'
+      DATABASE_URL: postgresql://postgres:diego@db:5432/batallaFriki?schema=public
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./socket-client-ts
+    container_name: batallaFriki-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://backend:3000
+    depends_on:
+      - backend
+
+  studio:
+    build: .
+    container_name: batallaFriki-studio
+    command: npx prisma studio --port 5555 --browser none
+    ports:
+      - "5555:5555"
+    environment:
       DATABASE_URL: postgresql://postgres:diego@db:5432/batallaFriki?schema=public
     depends_on:
       - db

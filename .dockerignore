@@ -1,0 +1,5 @@
+node_modules
+dist
+socket-client-ts/node_modules
+socket-client-ts/dist
+.git

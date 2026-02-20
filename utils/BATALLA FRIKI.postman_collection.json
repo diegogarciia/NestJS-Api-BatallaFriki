@@ -1,0 +1,366 @@
+{
+  "info": {
+    "_postman_id": "2630796f-33b5-4b04-8aa5-60d9d9e055a4",
+    "name": "BATALLA FRIKI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48599456"
+  },
+  "item": [
+    {
+      "name": "CON ARRAY",
+      "item": [
+        {
+          "name": "GET ALL PERSONAJES ARRAY",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/personajes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "personajes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ATACAR",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"atacanteId\": 1,\r\n    \"objetivoId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/personajes/atacar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "personajes",
+                "atacar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "REINICIAR PARTIDA",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"atacanteId\": 1,\r\n    \"objetivoId\": 2\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/personajes/reiniciarPartida",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "personajes",
+                "reiniciarPartida"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RANKING",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/personajes/ranking",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "personajes",
+                "ranking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "STATS",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/personajes/stats",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "personajes",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ATACAR ESPECIAL",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"atacanteId\": 2,\r\n    \"objetivoId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/personajes/atacarEspecial",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "personajes",
+                "atacarEspecial"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CON PRISMA",
+      "item": [
+        {
+          "name": "AÑADIR USUARIO",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nick\": \"USER\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"rol\": \"USER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AÑADIR PERSONAJE",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInN1YiI6Mywicm9sZXMiOlsiQURNSU4iXSwiaWF0IjoxNzcxMzMwNjk5LCJleHAiOjE3NzEzMzQyOTl9.fI-oAOUBiSLgtcGVuyaEUrCEW4ESQwupGoy8-5JEzX4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Sauron\",\r\n    \"vida\": 30,\r\n    \"ataque\": 5,\r\n    \"nivel\": 1,\r\n    \"imagen\": \"https://static.wikia.nocookie.net/eldragonverde/images/3/3a/Sauron.jpg/revision/latest?cb=20110626161300&path-prefix=es\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/personajes-bd",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "personajes-bd"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "LOGIN",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@test.com\",\r\n    \"password\": \"123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "INICIAR JUEGO",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwic3ViIjo1LCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3NzEzNDg5NzYsImV4cCI6MTc3MTM1MjU3Nn0.KM6zTeivJT7oV8C9HDYQ-SemyUuq_8mBCpMk5L24_AI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"personajeJugadorId\": 1,\r\n    \"tipoOponente\": \"CPU\",\r\n    \"personajeOponenteId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/juego/iniciar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "juego",
+                "iniciar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ATACAR",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwic3ViIjo1LCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3NzEzNDk2NjMsImV4cCI6MTc3MTM1MzI2M30.B0N23hsUFp2ZD-BJdWHXWQnd7QqCEnzh00ebdgTBo_E",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"personajeJugadorId\": 1,\r\n    \"tipoOponente\": \"CPU\",\r\n    \"personajeOponenteId\": 2\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/juego/atacar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "juego",
+                "atacar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RANKING",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwic3ViIjo1LCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3NzEzNTg1MDksImV4cCI6MTc3MTM2MjEwOX0.L3JajmBygoErPlwZ9quLxet7ME_Ac2sIKRByVNcrHYo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"personajeJugadorId\": 1,\r\n    \"tipoOponente\": \"CPU\",\r\n    \"personajeOponenteId\": 2\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/users/ranking",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "ranking"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

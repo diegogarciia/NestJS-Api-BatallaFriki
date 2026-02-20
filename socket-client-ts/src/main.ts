@@ -41,6 +41,37 @@ document.getElementById('btnLogin')?.addEventListener('click', async () => {
     } catch (e: any) { (document.getElementById('loginStatus') as HTMLElement).innerText = e.message; }
 });
 
+document.getElementById('btnRegister')?.addEventListener('click', async () => {
+    const nick = (document.getElementById('reg-nick') as HTMLInputElement).value;
+    const email = (document.getElementById('reg-email') as HTMLInputElement).value;
+    const password = (document.getElementById('reg-password') as HTMLInputElement).value;
+    const statusText = document.getElementById('regStatus') as HTMLElement;
+
+    if (!nick || !email || !password) {
+        statusText.innerText = 'Rellena todos los campos';
+        return;
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/users`, {
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nick, email, password, rol: 'USER' })
+        });
+
+        if (!res.ok) throw new Error('Error al registrar (quizás el email o nick ya existen)');
+
+        alert('¡Registro completado! Ahora puedes iniciar sesión.');
+        statusText.innerText = '';
+        (document.getElementById('reg-nick') as HTMLInputElement).value = '';
+        (document.getElementById('reg-email') as HTMLInputElement).value = '';
+        (document.getElementById('reg-password') as HTMLInputElement).value = '';
+        
+    } catch (e: any) { 
+        statusText.innerText = e.message; 
+    }
+});
+
 document.querySelectorAll('.btn-logout').forEach(btn => btn.addEventListener('click', () => { localStorage.clear(); location.reload(); }));
 
 function checkRole(user: any) {
